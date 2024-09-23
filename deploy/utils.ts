@@ -74,7 +74,7 @@ export const deployContract = async (contractArtifactName: string, constructorAr
   const log = (message: string) => {
     if (!options?.silent) console.log(message);
   };
-
+  
   log(`\nStarting deployment process of "${contractArtifactName}"...`);
 
   const wallet = options?.wallet ?? getWallet();
