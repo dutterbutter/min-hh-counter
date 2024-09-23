@@ -1,14 +1,12 @@
-import { deployContract, getProvider } from "./utils";
-import { Wallet } from "zksync-ethers";
-
-// An example of a basic deploy script
-// It will deploy a Greeter contract to selected network
-// as well as verify it on Block Explorer if possible for the network
 export default async function (hre: any) {
-  const provider = getProvider();
-  const wallet = new Wallet(hre.network.config.accounts?.[0]?? process.env.WALLET_PRIVATE_KEY!, provider);
+     const [signer] = await hre.ethers.getSigners();
+    
+     if (!signer) {
+       throw new Error("⛔️ No signer found in the current network configuration!");
+     }
 
-  const contractArtifactName = "Counter";
-  const constructorArguments = [];
-  await deployContract(contractArtifactName, constructorArguments, { wallet });
+     const counter = await hre.ethers.deployContract('Counter', [], signer);
+     await counter.waitForDeployment();
+     
+     console.info(`Counter deployed to: ${await counter.getAddress()}`);
 }

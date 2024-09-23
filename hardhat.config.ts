@@ -6,6 +6,7 @@ const {
   MAINNET_PRIVATE_KEY,
   TESTNET_PRIVATE_KEY,
   LOCAL_PRIVATE_KEY,
+  INFURA_API_KEY
 } = process.env;
 
 const config: HardhatUserConfig = {
@@ -36,6 +37,14 @@ const config: HardhatUserConfig = {
       ethNetwork: "localhost", // in-memory node doesn't support eth node; removing this line will cause an error
       zksync: true,
       accounts: [LOCAL_PRIVATE_KEY].filter(Boolean)
+    },
+    localL1: {
+      url: "http://127.0.0.1:8545",
+      accounts: [LOCAL_PRIVATE_KEY].filter(Boolean)
+    },
+    sepolia: {
+      url: `https://sepolia.infura.io/v3/${INFURA_API_KEY}`,
+      accounts: [TESTNET_PRIVATE_KEY].filter(Boolean)
     },
     hardhat: {
       zksync: true,
